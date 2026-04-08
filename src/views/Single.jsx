@@ -4,7 +4,6 @@ const Single = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
 
-  // jos käyttäjä avaa /single suoraan ilman statea, vältetään crash
   const item = state?.item;
 
   if (!item) {
@@ -23,6 +22,10 @@ const Single = () => {
   return (
     <div>
       <h2>{item.title}</h2>
+
+      <p>
+        <strong>Owner:</strong> {item.username ?? '-'}
+      </p>
 
       {item.description && <p>{item.description}</p>}
 
