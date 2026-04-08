@@ -1,2 +1,3 @@
 # wsk-react
-React Kurssi
+
+React-kurssin harjoituksia (Vite + React).
