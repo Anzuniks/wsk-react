@@ -11,6 +11,11 @@ const SingleView = (props) => {
   return (
     <dialog open={Boolean(item)}>
       <h3>{item.title}</h3>
+
+      <p>
+        <strong>Owner:</strong> {item.username ?? '-'}
+      </p>
+
       <p>{item.description}</p>
 
       {isImage && <img src={item.filename} alt={item.title} />}
@@ -24,10 +29,12 @@ const SingleView = (props) => {
 SingleView.propTypes = {
   item: PropTypes.shape({
     media_id: PropTypes.number.isRequired,
+    user_id: PropTypes.number,
     filename: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string,
     media_type: PropTypes.string.isRequired,
+    username: PropTypes.string, // added
   }),
   setSelectedItem: PropTypes.func.isRequired,
 };

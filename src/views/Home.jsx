@@ -8,8 +8,24 @@ const Home = () => {
   useEffect(() => {
     const load = async () => {
       try {
-        const json = await fetchData(`${import.meta.env.BASE_URL}test.json`);
-        setMediaArray(json);
+        // 1) Fetch media items from Media API
+        const mediaItems = await fetchData(
+          import.meta.env.VITE_MEDIA_API + '/media'
+        );
+
+        // 2) For each media item, fetch the owner (username) from Auth API
+        const mediaWithUsers = await Promise.all(
+          mediaItems.map(async (item) => {
+            const user = await fetchData(
+              import.meta.env.VITE_AUTH_API + '/users/' + item.user_id
+            );
+
+            // Add username to the media item
+            return { ...item, username: user.username };
+          })
+        );
+
+        setMediaArray(mediaWithUsers);
       } catch (error) {
         console.error('load media error:', error);
       }
@@ -28,6 +44,7 @@ const Home = () => {
             <th>Thumbnail</th>
             <th>Title</th>
             <th>Description</th>
+            <th>Owner</th>
             <th>Created</th>
             <th>Size</th>
             <th>Type</th>
