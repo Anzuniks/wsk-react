@@ -6,7 +6,7 @@ Tähän dokumenttiin on koottu Week 4 tehtävät, mitä olen tehnyt, sekä linki
 **Materiaali:** `Week4/01-react-start.md`
 
 **Linkit:**
-- Branch: `https://github.com/Anzuniks/<REPO>/tree/first-component`
+- Branch: `https://github.com/Anzuniks/wsk-react/tree/first-component`
 
 ---
 
@@ -14,7 +14,7 @@ Tähän dokumenttiin on koottu Week 4 tehtävät, mitä olen tehnyt, sekä linki
 **Materiaali:** `Week4/02-react-state.md`
 
 **Linkit:**
-- Branch: `https://github.com/Anzuniks/<REPO>/tree/state-management`
+- Branch: `https://github.com/Anzuniks/wsk-react/tree/state-management`
 
 ---
 
@@ -22,9 +22,8 @@ Tähän dokumenttiin on koottu Week 4 tehtävät, mitä olen tehnyt, sekä linki
 **Materiaali:** `Week4/03-react-routing.md`
 
 **Linkit:**
-- Branch: `https://github.com/Anzuniks/<REPO>/tree/routing`
-- Demo (julkaisu): `https://users.metropolia.fi/~andersnu/wsk-routing/`  
-  (jos teillä oli eri kansio kuin `wsk-routing`, vaihda oikeaksi)
+- Branch: `https://github.com/Anzuniks/wsk-react/tree/routing`
+- Demo (julkaisu): `https://users.metropolia.fi/~andersnu/wsk-routing/`
 
 ---
 
@@ -33,17 +32,17 @@ Tähän dokumenttiin on koottu Week 4 tehtävät, mitä olen tehnyt, sekä linki
 
 ### Lab assignment 1 (JSON -> useEffect)
 **Linkit:**
-- Branch: `https://github.com/Anzuniks/<REPO>/tree/hooks`
+- Branch: `https://github.com/Anzuniks/wsk-react/tree/hooks`
 - Demo (julkaisu): `https://users.metropolia.fi/~andersnu/hooks/`
 
 ### Lab assignment 2 (Media API + User API + Promise.all)
 **Huom:** Tehty `hooks-lab2` branchiin ja julkaistu samaan `hooks/`-polkuun.
 
 **Linkit:**
-- Branch: `https://github.com/Anzuniks/<REPO>/tree/hooks-lab2`
+- Branch: `https://github.com/Anzuniks/wsk-react/tree/hooks-lab2`
 - Demo (julkaisu): `https://users.metropolia.fi/~andersnu/hooks/`
 
 ---
 
 ## Repo
-- `https://github.com/Anzuniks/<REPO>`
+- `https://github.com/Anzuniks/wsk-react`
