@@ -1,17 +1,19 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useUserContext } from '../hooks/contextHooks';
 
 const Logout = () => {
-    const navigate = useNavigate();
+  const { handleLogout } = useUserContext();
 
-    useEffect(() => {
-        // Poistetaan token selaimen muistista
-        localStorage.removeItem('token'); 
-        // Ohjataan käyttäjä heti takaisin etusivulle
-        navigate('/'); 
-    }, [navigate]);
+  useEffect(() => {
+    // Kutsutaan Contextin handleLogout-funktiota heti kun sivu latautuu
+    handleLogout();
+  }, [handleLogout]);
 
-    return null; // Tämä komponentti ei piirrä mitään käyttöliittymää
+  return (
+    <div>
+      <p>Kirjaudutaan ulos...</p>
+    </div>
+  );
 };
 
 export default Logout;

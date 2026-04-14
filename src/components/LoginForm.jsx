@@ -1,39 +1,27 @@
-import { useNavigate } from 'react-router-dom';
 import useForm from '../hooks/formHooks';
-import { useAuthentication } from '../hooks/apiHooks';
+import { useUserContext } from '../hooks/contextHooks'; // Tuodaan uusi hook
 
 const LoginForm = () => {
-  const navigate = useNavigate();
-  const { postLogin } = useAuthentication();
+  // Napataan handleLogin-funktio Contextista
+  const { handleLogin } = useUserContext();
 
   const initValues = {
     username: '',
     password: '',
   };
 
-  // Funktio ottaa vastaan 'data'-parametrin formHooks-tiedostolta
   const doLogin = async (data) => {
     try {
-      console.log('Yritetään kirjautua...', data);
-      
-      const loginResult = await postLogin(data);
-      
-      if (loginResult && loginResult.token) {
-        console.log('Kirjautuminen onnistui!');
-        
-        // Tallennetaan token selaimeen
-        localStorage.setItem('token', loginResult.token);
-        
-        // Ohjataan käyttäjä etusivulle
-        navigate('/');
-      }
+      // Kutsutaan Contextin handleLoginia. 
+      // Se hoitaa: postLoginin, tokenin tallennuksen, user-staten ja navigoinnin!
+      await handleLogin(data);
+      console.log('Kirjautuminen onnistui Contextin kautta');
     } catch (error) {
       console.error('Kirjautumisvirhe:', error.message);
       alert('Kirjautuminen epäonnistui: ' + error.message);
     }
   };
 
-  // Otetaan hook käyttöön
   const { inputs, handleInputChange, handleSubmit } = useForm(doLogin, initValues);
 
   return (
