@@ -55,7 +55,7 @@ Logiikan siirtäminen `Home.jsx` -komponentista omaan `useMedia`-hookkiin.
 ## Upload tehtävä
 [https://users.metropolia.fi/~andersnu/upload/#/]
 (https://users.metropolia.fi/~andersnu/upload/#/)
-
+Kirjaudu eka sisää sit uploadaa 
 
 ## Repository
 Koko projekti löytyy osoitteesta: [https://github.com/Anzuniks/wsk-react](https://github.com/Anzuniks/wsk-react)
