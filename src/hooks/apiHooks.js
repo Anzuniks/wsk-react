@@ -1,27 +1,70 @@
 import { useEffect, useState } from 'react';
 
+// Apufunktio hoitamaan fetch-pyynnöt ja virheenkäsittelyn
+const fetchData = async (url, options = {}) => {
+    const response = await fetch(url, options);
+    const json = await response.json();
+    if (!response.ok) {
+        throw new Error(json.message || 'Verkkovirhe');
+    }
+    return json;
+};
+
 const useMedia = () => {
     const [mediaArray, setMediaArray] = useState([]);
 
     useEffect(() => {
         const getMedia = async () => {
             try {
-                const response = await fetch(import.meta.env.VITE_MEDIA_API + '/media');
-                if (!response.ok) {
-                    throw new Error('Verkkovirhe haettaessa mediaa');
-                }
-                const json = await response.json();
+                const json = await fetchData(import.meta.env.VITE_MEDIA_API + '/media');
                 setMediaArray(Array.isArray(json) ? json : []);
             } catch (error) {
                 console.error('Virhe getMedia-funktiossa:', error.message);
                 setMediaArray([]);
             }
         };
-
         getMedia();
     }, []);
 
-    return { mediaArray };
+    // Lisätty: Tallentaa mediatiedot tietokantaan (tiedoston nimen ja otsikon)
+    const postMedia = async (fileData, inputs, token) => {
+        const fetchOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + token,
+            },
+            body: JSON.stringify({
+                title: inputs.title,
+                description: inputs.description,
+                filename: fileData.filename,
+                media_type: fileData.media_type,
+            }),
+        };
+        return await fetchData(import.meta.env.VITE_MEDIA_API + '/media', fetchOptions);
+    };
+
+    return { mediaArray, postMedia };
+};
+
+// Uusi: Hoitaa varsinaisen tiedoston (binääridatan) lähetyksen
+const useFile = () => {
+    const postFile = async (file, token) => {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const fetchOptions = {
+            method: 'POST',
+            headers: {
+                Authorization: 'Bearer ' + token,
+            },
+            body: formData, // Selain asettaa Content-Typen automaattisesti boundary-tietoineen
+        };
+
+        return await fetchData(import.meta.env.VITE_UPLOAD_SERVER + '/upload', fetchOptions);
+    };
+
+    return { postFile };
 };
 
 const useAuthentication = () => {
@@ -31,13 +74,7 @@ const useAuthentication = () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(inputs),
         };
-
-        const response = await fetch(import.meta.env.VITE_AUTH_API + '/auth/login', fetchOptions);
-        if (!response.ok) {
-            throw new Error('Kirjautuminen epäonnistui');
-        }
-
-        return await response.json();
+        return await fetchData(import.meta.env.VITE_AUTH_API + '/auth/login', fetchOptions);
     };
 
     return { postLogin };
@@ -48,13 +85,7 @@ const useUser = () => {
         const fetchOptions = {
             headers: { Authorization: 'Bearer ' + token },
         };
-
-        const response = await fetch(import.meta.env.VITE_AUTH_API + '/users/token', fetchOptions);
-        if (!response.ok) {
-            throw new Error('Virheellinen token');
-        }
-
-        return await response.json();
+        return await fetchData(import.meta.env.VITE_AUTH_API + '/users/token', fetchOptions);
     };
 
     const postUser = async (inputs) => {
@@ -63,16 +94,10 @@ const useUser = () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(inputs),
         };
-
-        const response = await fetch(import.meta.env.VITE_AUTH_API + '/users', fetchOptions);
-        if (!response.ok) {
-            throw new Error('Rekisteröityminen epäonnistui');
-        }
-
-        return await response.json();
+        return await fetchData(import.meta.env.VITE_AUTH_API + '/users', fetchOptions);
     };
 
     return { getUserByToken, postUser };
 };
 
-export { useMedia, useAuthentication, useUser };
+export { useMedia, useAuthentication, useUser, useFile };
