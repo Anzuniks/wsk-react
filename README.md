@@ -111,3 +111,6 @@ Tähän dokumenttiin on koottu Week 4 tehtävät, mitä olen tehnyt, sekä linki
 
 ## Repo
 - `https://github.com/Anzuniks/wsk-react`
+
+Kaikki tehty 
+
