@@ -124,4 +124,44 @@ const useUser = () => {
     return { getUserByToken, postUser };
 };
 
-export { useMedia, useAuthentication, useUser, useFile };
+const useLike = () => {
+  const postLike = async (media_id, token) => {
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
+      },
+      body: JSON.stringify({ media_id }),
+    };
+    return await fetchData(import.meta.env.VITE_MEDIA_API + '/likes', fetchOptions);
+  };
+
+  const deleteLike = async (like_id, token) => {
+    const fetchOptions = {
+      method: 'DELETE',
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    };
+    return await fetchData(import.meta.env.VITE_MEDIA_API + '/likes/' + like_id, fetchOptions);
+  };
+
+  const getLikeCountByMediaId = async (media_id) => {
+    return await fetchData(import.meta.env.VITE_MEDIA_API + '/likes/count/' + media_id);
+  };
+
+  const getLikeByUser = async (media_id, token) => {
+    const fetchOptions = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    };
+    // This endpoint returns an array of likes for a file. The component will check if the current user's like is present.
+    return await fetchData(import.meta.env.VITE_MEDIA_API + '/likes/file/' + media_id, fetchOptions);
+  };
+
+  return { postLike, deleteLike, getLikeCountByMediaId, getLikeByUser };
+};
+
+export { useMedia, useAuthentication, useUser, useFile, useLike };
