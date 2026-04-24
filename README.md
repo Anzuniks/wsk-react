@@ -48,20 +48,20 @@ Tähän dokumenttiin on koottu Week 4 tehtävät, mitä olen tehnyt, sekä linki
 
 Olen tehnyt kaikki Week 6 Tailwind CSS labrat (Lab 1–3).
 
-**Pisteet:** 3 / 3 (Lab 1 + Lab 2 + Lab 3)
+**Pisteet yhteensä:** 27p (Lab 1: 8p, Lab 2: 9p, Lab 3: 10p)
 
 **Linkit:**
 - Branch: `https://github.com/Anzuniks/wsk-react/tree/tailwind`
 - Demo (julkaisu): `https://users.metropolia.fi/~andersnu/Tailwind/`
 
 ## Lab assignment 1
-✅ Tehty
+✅ Tehty — **8p**
 
 ## Lab assignment 2
-✅ Tehty
+✅ Tehty — **9p**
 
 ## Lab assignment 3
-✅ Tehty
+✅ Tehty — **10p**
 
 ---
 
