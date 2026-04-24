@@ -6,38 +6,43 @@ const Layout = () => {
   const { user, handleAutoLogin } = useUserContext();
 
   useEffect(() => {
-    // Tarkistetaan käyttäjän tila heti kun sovellus latautuu
     handleAutoLogin();
   }, [handleAutoLogin]);
 
   return (
-    <div>
-      <nav>
-        <ul>
-          <li><Link to="/">Home</Link></li>
+    /* flex-grow varmistaa, että main-osio täyttää tilan ja footer pysyy alhaalla */
+    <div className="flex flex-col min-h-screen">
+      <nav className="border-b border-[var(--border)] py-4">
+        {/* flex: asettaa linkit riviin 
+          justify-center: keskittää linkit
+          gap-6: lisää väliä linkkien välille
+          *:no-underline: poistaa alleviivauksen kaikilta lapsilta
+          hover:*:text-[var(--accent)]: vaihtaa värin kun hiiri on linkin päällä
+        */}
+        <ul className="flex justify-center gap-10 list-none p-0 m-0 font-medium
+                       *:text-[var(--text)] *:transition-colors *:duration-200
+                       hover:*:text-[var(--accent)] *:no-underline">
+          <li>
+            <Link to="/">Home</Link>
+          </li>
           
-          {/* Jos käyttäjä ON kirjautunut, näytetään nämä */}
           {user ? (
             <>
               <li><Link to="/profile">Profile</Link></li>
-              <li><Link to="/logout">Logout</Link></li>
               <li><Link to="/upload">Upload</Link></li>
+              <li><Link to="/logout">Logout</Link></li>
             </>
           ) : (
-            /* Jos käyttäjä EI OLE kirjautunut, näytetään nämä */
-            <>
-              <li><Link to="/login">Login</Link></li>
-            </>
+            <li><Link to="/login">Login</Link></li>
           )}
         </ul>
       </nav>
       
-      <main>
-        {/* Outlet renderöi sen sivun, jolla kulloinkin ollaan (Home, Login jne.) */}
+      <main className="flex-grow p-10">
         <Outlet />
       </main>
       
-      <footer>
+      <footer className="border-t border-[var(--border)] py-6 text-sm opacity-60">
         <p>&copy; 2026 Media App</p>
       </footer>
     </div>
