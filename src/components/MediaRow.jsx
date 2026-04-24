@@ -1,5 +1,29 @@
+import { useUserContext } from '../hooks/contextHooks';
+import { useMedia } from '../hooks/apiHooks';
+import { useNavigate } from 'react-router-dom';
+
 const MediaRow = ({ item, selectedItem, setSelectedItem }) => {
+  const { user } = useUserContext();
+  const { deleteMedia } = useMedia();
+  const navigate = useNavigate();
   const isSelected = selectedItem?.media_id === item.media_id;
+
+  // Tarkistetaan, onko käyttäjä kirjautunut JA (onko hän median omistaja TAI admin)
+  const isOwnerOrAdmin = user && (user.user_id === item.user_id || user.level_id === 0);
+
+  const handleDelete = async () => {
+    try {
+      await deleteMedia(item.media_id, localStorage.getItem('token'));
+      navigate(0); // Refresh page
+    } catch (error) {
+      console.error('Delete failed:', error);
+    }
+  };
+
+  const handleModify = async () => {
+    console.log("modify", item);
+    // TODO: Navigate to modify modal/view or implement inline editing
+  };
 
   return (
     <tr className="border-b border-[var(--border)] hover:bg-[var(--accent-bg)] transition-colors duration-150">
@@ -17,12 +41,10 @@ const MediaRow = ({ item, selectedItem, setSelectedItem }) => {
         )}
       </td>
       
-      {/* Käytetään font-medium ja tummempaa tekstiväriä otsikolle */}
       <td className="p-4 text-left font-medium text-[var(--text-h)]">
         {item.title || '-'}
       </td>
       
-      {/* Rajoitetaan kuvauksen pituutta, ettei taulukko veny liikaa */}
       <td className="p-4 text-left text-sm text-[var(--text)] max-w-xs truncate">
         {item.description || '-'}
       </td>
@@ -41,7 +63,7 @@ const MediaRow = ({ item, selectedItem, setSelectedItem }) => {
         </span>
       </td>
 
-      <td className="p-4 text-right">
+      <td className="p-4 text-right flex items-center justify-end gap-2">
         <button
           type="button"
           onClick={() => setSelectedItem(item)}
@@ -53,6 +75,23 @@ const MediaRow = ({ item, selectedItem, setSelectedItem }) => {
         >
           {isSelected ? 'Selected' : 'View'}
         </button>
+
+        {isOwnerOrAdmin && (
+          <>
+            <button
+              onClick={handleModify}
+              className="px-4 py-2 rounded-md font-semibold text-white bg-amber-500 hover:bg-amber-600 transition-colors shadow-sm"
+            >
+              Modify
+            </button>
+            <button
+              onClick={handleDelete}
+              className="px-4 py-2 rounded-md font-semibold text-white bg-red-500 hover:bg-red-600 transition-colors shadow-sm"
+            >
+              Delete
+            </button>
+          </>
+        )}
       </td>
     </tr>
   );

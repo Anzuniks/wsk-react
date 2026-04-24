@@ -38,7 +38,7 @@ const Layout = () => {
         </ul>
       </nav>
       
-      <main className="flex-grow p-10">
+      <main className="flex-grow p-8">
         <Outlet />
       </main>
       

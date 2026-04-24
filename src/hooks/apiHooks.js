@@ -44,7 +44,31 @@ const useMedia = () => {
         return await fetchData(import.meta.env.VITE_MEDIA_API + '/media', fetchOptions);
     };
 
-    return { mediaArray, postMedia };
+    // Lisätty: Poistaa median ID:n perusteella
+    const deleteMedia = async (id, token) => {
+        const fetchOptions = {
+            method: 'DELETE',
+            headers: {
+                Authorization: 'Bearer ' + token,
+            },
+        };
+        return await fetchData(import.meta.env.VITE_MEDIA_API + '/media/' + id, fetchOptions);
+    };
+
+    // Lisätty: Muokkaa olemassa olevan median tietoja (title, description)
+    const modifyMedia = async (id, inputs, token) => {
+        const fetchOptions = {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + token,
+            },
+            body: JSON.stringify(inputs),
+        };
+        return await fetchData(import.meta.env.VITE_MEDIA_API + '/media/' + id, fetchOptions);
+    };
+
+    return { mediaArray, postMedia, deleteMedia, modifyMedia };
 };
 
 // Uusi: Hoitaa varsinaisen tiedoston (binääridatan) lähetyksen
@@ -58,7 +82,7 @@ const useFile = () => {
             headers: {
                 Authorization: 'Bearer ' + token,
             },
-            body: formData, // Selain asettaa Content-Typen automaattisesti boundary-tietoineen
+            body: formData,
         };
 
         return await fetchData(import.meta.env.VITE_UPLOAD_SERVER + '/upload', fetchOptions);
